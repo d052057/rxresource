@@ -13,8 +13,8 @@ export interface Movie {
 export class AccountService {
   private http = inject(HttpClient);
   
-  getMovieMenu(): Observable<Movie[]> {
-    return (this.http.get<Movie[]>("http://localhost:4200/json/menus/movies/menu.json"))
+  getMovieMenu(): Observable<any> {
+    return of(this.http.get<Movie[]>("http://localhost:4200/json/menus/movies/menu.json"))
   }
   
 }
