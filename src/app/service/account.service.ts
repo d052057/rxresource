@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-
+import { Observable, of } from 'rxjs';
+export interface Movie {
+  id: number,
+  title: string,
+  param: string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +13,8 @@ import { Observable } from 'rxjs';
 export class AccountService {
   private http = inject(HttpClient);
   
-  getMovieMenu(): Observable<any> {
-    return this.http.get<any>("http://localhost:4200/json/menus/movies/menu.json")
+  getMovieMenu(): Observable<Movie[]> {
+    return (this.http.get<Movie[]>("http://localhost:4200/json/menus/movies/menu.json"))
   }
   
 }
