@@ -14,7 +14,7 @@ export class AccountService {
   private http = inject(HttpClient);
   
   getMovieMenu(): Observable<any> {
-    return of(this.http.get<Movie[]>("http://localhost:4200/json/menus/movies/menu.json"))
+    return (this.http.get<Movie[]>("http://localhost:4200/json/menus/movies/menu.json"))
   }
   
 }
