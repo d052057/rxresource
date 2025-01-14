@@ -1,11 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ResourceRef, Signal, inject, linkedSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AccountService } from './service/account.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CommonModule, JsonPipe} from '@angular/common';
 import { map } from 'rxjs';
 
-interface mm {
+export interface Movie {
   id: number,
   title: string,
   param: string
@@ -19,19 +19,20 @@ interface mm {
 export class AppComponent {
   title = 'rxresource';
   service = inject(AccountService);
-  musicMenu = rxResource({
+  musicMenu: ResourceRef<Movie[]> = rxResource({
     loader:() => this.service.getMovieMenu()
   })
-  x: any;
-  y: any;
-  z: any;
+  x: Signal<string | undefined> = linkedSignal(
+    () => this.musicMenu.value()?.[0]?.title
+  );
+  y: Signal<string | undefined> = linkedSignal(
+    () => this.musicMenu.value()?.[0]?.param
+  );
+  z: Signal<number | undefined> = linkedSignal(
+    () => this.musicMenu.value()?.[0]?.id
+  );
   ngOnInit(): void {
-    const t = this.musicMenu.value();
-    const i: mm = t?.[0]
-    this.x = t?.title;
-    this.y = t?.param;
-    this.z = t?.id;
-  
+    console.log('x:' + JSON.stringify(this.x));
   }
    
 }
